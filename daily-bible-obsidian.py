@@ -47,7 +47,10 @@ def print_readings_obsidian(currentDate, h2, h3, add):
     # print readings
     for i in range(len(add)):
         reading = str(h3[i].contents[0]).strip().replace('Or',' (or)').replace('Responsorial ','')
-        verse = str(add[i].contents[1].contents[0]).replace('\n','')
+        try:
+            verse = str(add[i].contents[1].contents[0]).replace('\n','')
+        except: # I think this is an issue when there are options for the Gospel? (i.e. on Feast of the Nativity of the Blessed Virgin Mary 2021-09-08)
+            verse = ''
         verseFront = verse.split(':')[0].replace(' ','-')
         try:
             if int(verseFront.split('-')[1]) < 10:
