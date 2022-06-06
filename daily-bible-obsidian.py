@@ -16,6 +16,13 @@ def scrape_readings(currentDate):
     h2 = soup.find_all('h2')
     h3 = soup.find_all('h3')
     add = soup.find_all(lambda tag: tag.name == 'div' and tag.get('class') == ['address'])
+    #For days like Pentecost Sunday, where there are vigil and day masses
+    if len(h3) == 0:
+        page = requests.get('https://bible.usccb.org/bible/readings/{}-day.cfm'.format(current_date.strftime('%m%d%y')))
+        soup = BeautifulSoup(page.content, 'html.parser')
+        h2 = soup.find_all('h2')
+        h3 = soup.find_all('h3')
+        add = soup.find_all(lambda tag : tag.name == 'div' and tag.get('class') == ['address'])
     return h2, h3, add, soup
 
 
